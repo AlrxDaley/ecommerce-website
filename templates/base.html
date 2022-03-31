@@ -14,7 +14,10 @@
     {% endblock %}
 
     {% block corecss %}
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/0c1ca09b2f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% endblock %}
 
     {% block extra_css %}
@@ -33,7 +36,7 @@
   </head>
   <body>
     <header class="container-fluid fixed-top">
-      <div class="row">
+      <div class="row bg-white pt-lg-2 d-none d-lg-flex">
         <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
           <a href="{% url 'home'%}" class="nav-link main-logo-link">
             <h2 class="logo-font text-black my-0">
@@ -42,7 +45,7 @@
           </a>
         </div>
         <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
-          <form method="GET" action="{% url 'products' %}">
+          <form method="GET" action="">
               <div class="input-group w-100">
                   <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site">
                   <div class="input-group-append">

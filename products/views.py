@@ -2,7 +2,7 @@ from email import message
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.contrib import messages
 from django.db.models import Q
-from .models import product
+from .models import product, category
 
 # Create your views here.
 
@@ -11,9 +11,15 @@ def all_products(request):
     
     Products = product.objects.all()
     query = None
+    categories = None
     
     
     if request.GET:
+        if 'category' in request.GET:
+            categories = request.GET['category'].split(',')
+            Products = Products.filter(category__name__in=categories)
+            categories = category.objects.filter(name__in=categories)
+        
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -25,6 +31,8 @@ def all_products(request):
     
     context = {
         'products': Products,
+        'search_term': query,
+        'current_categories': categories,
     }
 
     return render(request, 'products/products.html', context)

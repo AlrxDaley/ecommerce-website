@@ -1,4 +1,3 @@
-from email import message
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.contrib import messages
 from django.db.models import Q
@@ -12,9 +11,29 @@ def all_products(request):
     Products = product.objects.all()
     query = None
     categories = None
+    sort = None
+    direction = None
     
     
     if request.GET:
+        if 'sort' in request.GET:
+            sortkey = request.GET['sort']
+            sort = sortkey
+            if sortkey == 'name':
+                sortkey = 'lower_name'
+                Products = Products.annotate(lower_name=Lower('name'))
+                
+            if 'direction' in request.GET:
+                direction = request.GET['direction']
+                if direction == 'desc':
+                    sortkey = f'-{sortkey}'
+            
+            Products = Products.order_by(sortkey)
+            
+
+              
+                
+        
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             Products = Products.filter(category__name__in=categories)
@@ -29,10 +48,13 @@ def all_products(request):
             queries = Q(name__icontains=query) | Q(description__icontains=query)
             Products = Products.filter(queries)
     
+    current_sorting = f'{sort}_{direction}'
+    
     context = {
         'products': Products,
         'search_term': query,
         'current_categories': categories,
+        'current_sorting': current_sorting,
     }
 
     return render(request, 'products/products.html', context)

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load nag_tools %}
+{% load bag_tools %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col">
                 <hr>
-                <h2 class="logo-font mb-4">Shopping Bag</h2>
+                <h2 class="logo-font mb-4">Checkout</h2>
                 <hr>
             </div>
         </div>
@@ -76,7 +76,7 @@
             <div class="col col-lg-6">
                 <p class="text-muted">Please fill out the form belwo to complete your order</p>
                 <form action="{% url 'checkout' %}" method="POST" id="payemnt-form">
-                    {%csrf%}
+                    {%csrf_token%}
                     <fieldset class="rounded px-3 mb-5">
                         <legend class="fieldset-label small text-black px-2 w-auto">Details</legend>
                         {{ order_form.full_name | as_crispy_field }}
